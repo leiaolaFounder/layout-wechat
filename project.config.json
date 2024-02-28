@@ -1,0 +1,35 @@
+{
+  "miniprogramRoot": "dist/",
+  "projectname": "layout",
+  "description": "layout",
+  "appid": "wx0fad198dc18e7ebe",
+  "setting": {
+    "ignoreDevUnusedFiles": false,
+    "ignoreUploadUnusedFiles": false,
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "compileHotReLoad": false,
+    "postcss": true,
+    "minified": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "compileWorklet": true,
+    "uglifyFileName": false
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.3.4",
+  "srcMiniprogramRoot": "dist/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  }
+}

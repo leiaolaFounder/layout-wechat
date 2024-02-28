@@ -1,0 +1,11 @@
+.safe-top {
+  position: relative;
+  flex-shrink: 0;
+  .fixed-top {
+    position: fixed;
+    z-index: 10000;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+}

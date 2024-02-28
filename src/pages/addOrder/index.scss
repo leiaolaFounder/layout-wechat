@@ -1,0 +1,69 @@
+.add-order {
+  height: 100vh;
+
+  background: #f2f2f2;
+  padding: 0 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  .at-form {
+    margin-top: 20px !important;
+    border-radius: 20px;
+    padding-right: 32px;
+    overflow: hidden;
+    box-sizing: border-box;
+    .at-input__title,
+    .at-input__input {
+      font-size: 28px;
+      font-weight: 500;
+    }
+    .at-input__input {
+      color: #999999;
+    }
+    .notes {
+      display: flex;
+      margin-left: 32px;
+      border-bottom: 1px solid #eeeeee;
+      text {
+        margin-top: 16px;
+        margin-right: 50px;
+        width: 172rpx;
+        font-size: 28px;
+        font-weight: 500;
+      }
+      .at-textarea {
+        border: 0 !important;
+      }
+      .at-textarea__textarea {
+        font-size: 28px !important;
+        font-weight: 500 !important;
+      }
+    }
+    .upload-img {
+      padding: 0 32px;
+      margin-bottom: 66px;
+      font-size: 28px;
+      font-weight: 500;
+      display: flex;
+      flex-direction: column;
+      .img-title {
+        margin: 32px 0;
+      }
+      .at-image-picker__flex-box {
+        padding: 0;
+        .at-image-picker__flex-item:first-child {
+          margin: 0 !important;
+        }
+      }
+    }
+    .add-sub {
+      position: fixed;
+      box-sizing: border-box;
+      padding: 32px;
+      left: 0;
+      right: 0;
+      bottom: 66px;
+    }
+  }
+}

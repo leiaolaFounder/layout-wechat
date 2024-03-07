@@ -10,14 +10,14 @@ const myOrder = () => {
   const [tabList] = useState([
     { title: "全部" },
     { title: "进行中" },
-    { title: "申请审核" },
+    { title: "审核中" },
     { title: "已完成" },
+    { title: "已取消" },
   ]);
   const [current, setCurrent] = useState(0);
   const mytOrderListRef = useRef(null);
   const thandleClick = (value) => {
     setCurrent(value);
-    console.log(mytOrderListRef);
   };
   return (
     <View className="my-order">

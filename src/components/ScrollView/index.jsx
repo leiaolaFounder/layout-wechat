@@ -10,26 +10,20 @@ const LaScrollView = (props) => {
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [newPDH, setNewPDH] = useState(0);
-
-  let pageSize = 10;
-  let pageNo = props.pageNo || 1;
   const scrollRef = useRef(null);
   useDidShow(() => {
     setNewPDH(PDH);
-    initData(pageNo, pageSize);
   });
   //   下拉刷新
   const handleRefresh = async () => {
     if (isRefreshing) return;
     setIsRefreshing(true);
-    pageNo = 1;
-    await initData(pageNo, pageSize);
+    await initData("refresh");
     setIsRefreshing(false);
   };
   //  上拉加载
   const handleLoadMore = async () => {
-    pageNo++;
-    await initData(pageNo, pageSize);
+    await initData("loadMore");
   };
 
   return (

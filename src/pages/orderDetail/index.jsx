@@ -4,13 +4,13 @@ import BasicInformation from "./component/basic-information";
 import "taro-ui/dist/style/components/icon.scss";
 import { useLoad, navigateBack } from "@tarojs/taro";
 import { useState } from "react";
-import { useFetch } from "@hooks/fetch";
+import { useFeatch } from "@hooks/fetch";
 import "./index.scss";
 
 const OrderDetail = () => {
   const [orderId, setOrderId] = useState();
   const [orderDetail, setOrderDetail] = useState();
-  const fetch = useFetch();
+  const fetch = useFeatch();
   useLoad(({ orderId }) => {
     setOrderId(orderId);
     getOrderDetail(orderId);

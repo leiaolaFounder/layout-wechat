@@ -1,24 +1,20 @@
 import { View, Text, Image } from "@tarojs/components";
 import { AtButton } from "taro-ui";
-import { reLaunch } from "@tarojs/taro";
+import { reLaunch, setStorageSync } from "@tarojs/taro";
 import loginImg from "./image/login_img.png";
-import { useFetch } from "@hooks/fetch";
+import { useFeatch } from "@hooks/fetch";
 import { useAppDispatch, userActions } from "@hooks/store";
 import "./index.scss";
 
 const Login = () => {
-  const fetch = useFetch();
+  const fetch = useFeatch();
   const dispatch = useAppDispatch();
   const userLogin = async () => {
-    const {
-      data: { token },
-      errno,
-    } = await fetch("get", "/users/login", {
+    const { data } = await fetch("get", "/users/login", {
       userName: "leiao",
       passWord: "123456",
     });
-    if (errno) return;
-    dispatch(userActions.setToken(token));
+    dispatch(userActions.setUserInfo(data.userInfo));
     const url = "/pages/index/index";
     reLaunch({
       url,

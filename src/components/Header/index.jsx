@@ -1,31 +1,23 @@
 import { getEnv, getMenuButtonBoundingClientRect } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import "./index.scss";
+import { useAppDispatch, userActions } from "@hooks/store";
 
-const system = getEnv();
-const { top, height } =
-  system === "WEB" ? { top: 0, height: 0 } : getMenuButtonBoundingClientRect();
+import "./index.scss";
+const { top, height } = getMenuButtonBoundingClientRect();
 const baseHeight = 8;
-const defaultProps = {
-  scrollTop: 0,
-  gradual: false,
-  bgColor: "#FFFFFF",
-  fixed: false,
-};
 
 const SafeTopArea = (props) => {
-  props = { ...defaultProps, ...props };
-
-  const { children, fixed } = props;
-
+  const dispatch = useAppDispatch();
+  const PDH = top - baseHeight;
+  const a = height + baseHeight * 2;
+  dispatch(userActions.setPDH(PDH + a));
   return (
     <View
-      className={`fixed-top ${fixed ? "sk" : ""}`}
       style={`width: 100%;  padding-top:${top - baseHeight}px;height:${
         height + baseHeight * 2
       }px;`}
     >
-      {children}
+      {props.children}
     </View>
   );
 };

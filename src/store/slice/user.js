@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  token: "",
   userInfo: {},
+  PDH: 0,
 };
-
 const name = "user";
 
 const rootSlice = createSlice({
@@ -16,13 +15,12 @@ const rootSlice = createSlice({
         state[key] = action.payload[key];
       }
     },
-    setToken: (state, action) => {
-      state.token = action.payload;
-    },
     setUserInfo: (state, action) => {
       state.userInfo = action.payload;
     },
-
+    setPDH: (state, action) => {
+      state.PDH = action.payload;
+    },
     clear: (state) => {
       state.userInfo = undefined;
       state.token = undefined;

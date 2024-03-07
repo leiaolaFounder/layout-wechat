@@ -1,9 +1,8 @@
-import { request, showToast, showModal, navigateTo } from "@tarojs/taro";
+import { request, getStorageSync, showModal, navigateTo } from "@tarojs/taro";
 import { useAppSelector, useAppDispatch } from "@hooks/store";
 
-export const useFetch = () => {
-  const token = useAppSelector((state) => state.user.token);
-
+export const useFeatch = () => {
+  const userInfo = useAppSelector((state) => state.user.userInfo);
   return async (method, url, data) => {
     return await new Promise((resolve, reject) => {
       console.log(process.env.BASE_URL);
@@ -12,7 +11,8 @@ export const useFetch = () => {
         method,
         data,
         header: {
-          token,
+          token: userInfo.token,
+          userId: userInfo.id,
         },
         success: (res) => {
           const result = res.data;

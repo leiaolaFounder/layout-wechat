@@ -2,6 +2,7 @@ import { useLaunch } from "@tarojs/taro";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import { store, persistor } from "@store/index";
+import "taro-ui/dist/style/components/icon.scss";
 import "taro-ui/dist/style/index.scss";
 import "./app.scss";
 

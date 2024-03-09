@@ -1,19 +1,32 @@
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
   font-family: "iconfont"; /* Project id 4020149 */
-  src: url("//at.alicdn.com/t/c/font_4020149_3p0fjm19og1.woff2?t=1707794281648")
+  src: url("//at.alicdn.com/t/c/font_4020149_t5zzhkcxct.woff2?t=1709884655138")
       format("woff2"),
-    url("//at.alicdn.com/t/c/font_4020149_3p0fjm19og1.woff?t=1707794281648")
+    url("//at.alicdn.com/t/c/font_4020149_t5zzhkcxct.woff?t=1709884655138")
       format("woff"),
-    url("//at.alicdn.com/t/c/font_4020149_3p0fjm19og1.ttf?t=1707794281648")
+    url("//at.alicdn.com/t/c/font_4020149_t5zzhkcxct.ttf?t=1709884655138")
       format("truetype");
 }
-
 .iconfont {
   font-family: "iconfont" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.ziyuan35:before {
+  content: "\e779";
+}
+.wofabude:before {
+  content: "\e665";
+}
+.ziyuan35:before {
+  content: "\e779";
+}
+.a-productsshown:before {
+  content: "\e608";
 }
 
 .icon-sousuoxiawu-:before {

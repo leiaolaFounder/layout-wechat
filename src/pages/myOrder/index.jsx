@@ -1,5 +1,5 @@
 import { View, Text, Image } from "@tarojs/components";
-import "taro-ui/dist/style/components/icon.scss";
+import { navigateBack } from "@tarojs/taro";
 import Header from "@components/Header/index";
 import MytOrderList from "./orderList/index";
 import { AtTabs } from "taro-ui";
@@ -11,8 +11,7 @@ const myOrder = () => {
     { title: "全部" },
     { title: "进行中" },
     { title: "审核中" },
-    { title: "已完成" },
-    { title: "已取消" },
+    { title: "已审核" },
   ]);
   const [current, setCurrent] = useState(0);
   const mytOrderListRef = useRef(null);
@@ -23,7 +22,10 @@ const myOrder = () => {
     <View className="my-order">
       <Header>
         <View className="header-content">
-          <Text></Text>
+          <Text
+            className="at-icon at-icon-chevron-left"
+            onClick={() => navigateBack(-1)}
+          ></Text>
           <Text>我的订单</Text>
           <Text></Text>
         </View>

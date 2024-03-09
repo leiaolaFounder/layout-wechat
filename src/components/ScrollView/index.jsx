@@ -42,7 +42,11 @@ const LaScrollView = (props) => {
         onScrollToLower={handleLoadMore}
         style={{ height: "100%" }}
       >
-        <View style={{ padding: "20rpx" }}>{children}</View>
+        {children ? (
+          <View style={{ padding: "20rpx" }}>{children}</View>
+        ) : (
+          "暂无数据"
+        )}
       </ScrollView>
     </View>
   );

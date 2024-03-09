@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 const OrderList = (props) => {
   const fetch = useFeatch();
   const [myOrderList, setMyOrderList] = useState([]);
-  const [completionStatus, setCompletionStatus] = useState("");
   let pageNo = 1;
   let pageSize = 10;
   const statusMap = {
@@ -32,6 +31,7 @@ const OrderList = (props) => {
     }
     const { data } = await fetch("get", "/orders/myOrder", {
       completionStatus: currentMap[props.current],
+      isAssignee: 2,
       pageNo,
       pageSize,
     });
@@ -48,6 +48,7 @@ const OrderList = (props) => {
   };
   useEffect(() => {
     getMyOrder();
+    setMyOrderList([]);
   }, [props.current]);
 
   const jumpOrderDetail = () => {

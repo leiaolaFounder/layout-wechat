@@ -1,7 +1,6 @@
 import { View, Text, Image } from "@tarojs/components";
 import Header from "../../components/Header/index";
 import BasicInformation from "./component/basic-information";
-import "taro-ui/dist/style/components/icon.scss";
 import { useLoad, navigateBack } from "@tarojs/taro";
 import { useState } from "react";
 import { useFeatch } from "@hooks/fetch";

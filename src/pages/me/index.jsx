@@ -34,22 +34,31 @@ export default function Index() {
       <View className="user-content">
         <AtList>
           <AtListItem
-            title="我的订单"
+            title="接取的订单"
             arrow="right"
             iconInfo={{
               size: 25,
-              value: "icon iconfont icon-dingdan",
+              value: "icon iconfont a-productsshown",
             }}
             onClick={() => jumpPage("/pages/myOrder/index")}
           />
           <AtListItem
-            title="发布订单"
+            title="我发布的"
             arrow="right"
             iconInfo={{
               size: 25,
-              value: "icon iconfont icon-sousuoxiawu-",
+              value: "icon iconfont  wofabude",
             }}
             onClick={() => jumpPage("/pages/myPublisHorders/index")}
+          />
+          <AtListItem
+            title="添加订单"
+            arrow="right"
+            iconInfo={{
+              size: 25,
+              value: "icon iconfont ziyuan35",
+            }}
+            onClick={() => jumpPage("/pages/addOrder/index")}
           />
           <AtListItem
             title="退出登陆"

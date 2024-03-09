@@ -1,25 +1,56 @@
-import { View, Text, Image } from "@tarojs/components";
-import { AtButton } from "taro-ui";
-import { useDidShow, navigateTo } from "@tarojs/taro";
-import { useState } from "react";
+import { View, Text, Block } from "@tarojs/components";
+import LaScrollView from "@components/ScrollView/index";
 import { useFeatch } from "@hooks/fetch";
+import { AtButton } from "taro-ui";
+import { navigateTo } from "@tarojs/taro";
 import "./index.scss";
+import { useState, useEffect } from "react";
 
-const PublisOrderList = () => {
-  const featch = useFeatch();
-  const [publisList, setPublisList] = useState(null);
-  const sizeColor = {
-    purple: "#7f6ecb",
-    grey: "#999999",
-    black: "#333333",
+const OrderList = (props) => {
+  const fetch = useFeatch();
+  const [myOrderList, setMyOrderList] = useState([]);
+  let pageNo = 1;
+  let pageSize = 10;
+  const statusMap = {
+    IN_PROGRESS: "进行中",
+    IN_APPROVAL: "审核中",
+    COMPLETED: "已审核",
+    canceled: "已取消",
   };
-  useDidShow(() => {
-    getPublisList();
-  });
-  const getPublisList = async () => {
-    const { data } = await featch("get", "/orders/myPublisher");
-    setPublisList(data);
+  const getMyOrder = async (key) => {
+    const currentMap = {
+      0: "",
+      1: "IN_PROGRESS",
+      2: "IN_APPROVAL",
+      3: "COMPLETED",
+    };
+    if (key == "refresh") {
+      pageNo = 1;
+    } else if (key == "loadMore") {
+      pageNo++;
+    }
+    const { data } = await fetch("get", "/orders/myOrder", {
+      completionStatus: currentMap[props.current],
+      isAssignee: 1,
+      pageNo,
+      pageSize,
+    });
+    if (!data?.length) return;
+    if (key == "refresh") {
+      setMyOrderList(data);
+    } else if (key == "loadMore") {
+      pageNo++;
+      const handData = [...myOrderList, ...data];
+      setMyOrderList(handData);
+    } else {
+      setMyOrderList(data);
+    }
   };
+  useEffect(() => {
+    setMyOrderList([]);
+    getMyOrder();
+  }, [props.current]);
+
   const jumpOrderDetail = () => {
     const url = "/pages/orderDetail/index";
     navigateTo({
@@ -28,32 +59,61 @@ const PublisOrderList = () => {
   };
   return (
     <View className="order-list">
-      {publisList
-        ? publisList.map((item) => (
+      <LaScrollView initData={getMyOrder} PAGEPDH={88}>
+        {myOrderList &&
+          myOrderList.map((item) => (
             <View className="order-list-item" onClick={jumpOrderDetail}>
               <View className="order-top-title">
-                <Text>发布人：自己</Text>
-                <Text>审核中</Text>
+                <Text>发布人：小伙子</Text>
+
+                <Text>
+                  {item.completion_status == "IN_PROGRESS"
+                    ? item.order_assignee_id
+                      ? "已接单"
+                      : "暂未接单"
+                    : statusMap[item.completion_status]}
+                </Text>
               </View>
               <View className="order-top">
                 <View className="order-list-left">
                   <View className="order-title">{item.title}</View>
-                  <View className="order-notes">{item.notes}</View>
+                  <View className="order-notes">{item.describe}</View>
                 </View>
               </View>
               <View className="order-content">
                 <View className="order-time">发单时间：{item.createdAt}</View>
               </View>
               <View className="order-operate">
-                <AtButton circle={true}>取消订单</AtButton>
-                <AtButton type="secondary" circle={true}>
-                  上传订单
-                </AtButton>
+                <View style={{ display: "flex" }}>
+                  {item.completion_status == "IN_APPROVAL" && (
+                    <Block>
+                      <AtButton type="secondary" circle={true}>
+                        审核驳回
+                      </AtButton>
+                      <AtButton type="secondary" circle={true}>
+                        通过审核
+                      </AtButton>
+                    </Block>
+                  )}
+                  {item.completion_status == "IN_PROGRESS" && (
+                    <Block>
+                      {item.order_assignee_id ? (
+                        <AtButton type="secondary" circle={true}>
+                          取消订单
+                        </AtButton>
+                      ) : (
+                        <AtButton type="secondary" circle={true}>
+                          删除订单
+                        </AtButton>
+                      )}
+                    </Block>
+                  )}
+                </View>
               </View>
             </View>
-          ))
-        : null}
+          ))}
+      </LaScrollView>
     </View>
   );
 };
-export default PublisOrderList;
+export default OrderList;

@@ -1,5 +1,18 @@
-import { View, Text, Image } from "@tarojs/components";
-import { AtForm, AtInput, AtImagePicker, AtTextarea, AtButton } from "taro-ui";
+import { View, Text, Button } from "@tarojs/components";
+import { navigateBack } from "@tarojs/taro";
+import {
+  AtForm,
+  AtInput,
+  AtImagePicker,
+  AtTextarea,
+  AtButton,
+  AtModal,
+  AtModalHeader,
+  AtModalContent,
+  AtModalAction,
+  AtToast,
+} from "taro-ui";
+
 import { useFeatch } from "@hooks/fetch";
 import { useState } from "react";
 import "./index.scss";
@@ -12,10 +25,12 @@ const addOrder = () => {
     orderPrice: 0,
     describe: "",
     orderImgUrl: "",
-    orderVerification: "1234",
+    orderVerification: "",
   });
+
+  const [orderDialogFlag, setOrderDialogFlag] = useState(false);
+  const [toast, setToast] = useState(false);
   const changeOrderData = (value, event) => {
-    console.log(event);
     const name = event.target ? event.target.id : event;
     setOrderFrom((prevFormData) => ({
       ...prevFormData,
@@ -23,10 +38,47 @@ const addOrder = () => {
     }));
   };
   const subOrderData = async () => {
+    setOrderDialogFlag(true);
+  };
+  const cancelSubOrder = () => {
+    setOrderDialogFlag(false);
+  };
+  const subOrder = async () => {
     await featch("post", "/orders/addOrder", orderFrom);
+    setOrderDialogFlag(false);
+    setToast(true);
+    setTimeout(() => {
+      setToast(false);
+      navigateBack(-1);
+    }, 1000);
   };
   return (
     <View className="add-order">
+      <AtToast isOpened={toast} text="发布成功" icon="check"></AtToast>
+      <View>
+        <AtModal isOpened={orderDialogFlag}>
+          <AtModalHeader>订单码</AtModalHeader>
+          <AtModalContent>
+            <View style={{ fontSize: "24rpx" }}>
+              请一定保密您输入的订单码，订单完成后跟接单人核对
+            </View>
+            <AtInput
+              border={false}
+              name="value2"
+              title="订单码："
+              type="number"
+              placeholder="请输入您的订单密码"
+              value={orderFrom?.orderVerification}
+              onChange={(val) => changeOrderData(val, "orderVerification")}
+            />
+          </AtModalContent>
+          <AtModalAction>
+            <Button onClick={cancelSubOrder}>取消</Button>
+            <Button onClick={subOrder}>确定</Button>
+          </AtModalAction>
+        </AtModal>
+      </View>
+
       <AtForm onSubmit={subOrderData}>
         <AtInput
           name="title"

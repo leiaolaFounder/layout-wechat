@@ -1,35 +1,52 @@
 import LaScrollView from "@components/ScrollView/index";
-import { View, Text, Image } from "@tarojs/components";
-import { AtButton } from "taro-ui";
-import { navigateTo, useDidShow } from "@tarojs/taro";
+import { View } from "@tarojs/components";
+import { navigateTo } from "@tarojs/taro";
 import { useFeatch } from "@hooks/fetch";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import "./index.scss";
 
 const OrderList = () => {
   const featch = useFeatch();
-  const [orderDataList, setOrderDataList] = useState(null);
-  useDidShow(() => {
-    initData();
-  });
+  const [orderDataList, setOrderDataList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [pageNo, setPageNo] = useState(1);
 
-  const grabOrder = async (e, id) => {
-    e.stopPropagation();
-    await featch("post", "/orders/chageOrderState", {
-      state: "IN_PROGRESS",
-      order_id: id,
-    });
+  useEffect(() => {
+    initData();
+  }, [pageNo]);
+  useEffect(() => {
+    if (!orderDataList.length) {
+      initData();
+      return;
+    }
+  }, [orderDataList]);
+  const refresh = async () => {
+    setIsRefreshing(true);
+    setOrderDataList([]);
+    setPageNo(1);
   };
-  const initData = async (pageNo, pageSize) => {
+
+  const loadMore = async () => {
+    if (isLoading) return;
+    await setPageNo(pageNo + 1);
+    setIsLoading(true);
+  };
+  const initData = async () => {
     const {
       data: { orderList },
     } = await featch("get", "/orders/orderList", {
-      pageNo,
-      pageSize,
+      pageNo: pageNo,
+      pageSize: 10,
     });
-    setOrderDataList(orderList);
+
+    if (orderList.length) {
+      await setOrderDataList([...orderDataList, ...orderList]);
+    }
+    pageNo == 1 ? setIsRefreshing(false) : setIsLoading(false);
   };
+
   const jumpOrderDetail = (id) => {
     const url = `/pages/orderDetail/index?orderId=${id}`;
     navigateTo({
@@ -38,7 +55,12 @@ const OrderList = () => {
   };
   return (
     <View className="order-list">
-      <LaScrollView initData={initData}>
+      <LaScrollView
+        isRefreshing={isRefreshing}
+        refresh={refresh}
+        loadMore={loadMore}
+        initData={initData}
+      >
         {orderDataList
           ? orderDataList.map((item) => (
               <View
@@ -50,7 +72,7 @@ const OrderList = () => {
                     <View className="order-title">{item?.title}</View>
                     <View className="order-notes">{item?.describe}</View>
                   </View>
-                  <View className="order-list-right">
+                  {/* <View className="order-list-right">
                     <AtButton
                       type="secondary"
                       onClick={(e) => grabOrder(e, item.id)}
@@ -58,7 +80,7 @@ const OrderList = () => {
                     >
                       抢单
                     </AtButton>
-                  </View>
+                  </View> */}
                 </View>
                 <View className="order-bottom">
                   <View className="order-time">

@@ -19,6 +19,10 @@ export default defineAppConfig({
         text: "跑腿",
       },
       {
+        pagePath: "pages/login/index",
+        text: "点餐",
+      },
+      {
         pagePath: "pages/me/index",
         text: "个人中心",
       },

@@ -8,7 +8,6 @@ import "./index.scss";
 
 const Index = () => {
   const userInfo = useAppSelector((state) => state?.user?.userInfo);
-  console.log(userInfo);
   useDidShow(() => {
     if (!userInfo.token) {
       reLaunch({

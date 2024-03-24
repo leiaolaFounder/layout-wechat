@@ -8,12 +8,12 @@ import { useState, useRef } from "react";
 import "./index.scss";
 
 const myPublisHorders = () => {
-  const [tabList] = useState([
+  const tabList = [
     { title: "全部" },
     { title: "进行中" },
     { title: "待审核" },
     { title: "已审核" },
-  ]);
+  ];
   const [current, setCurrent] = useState(0);
   const mytOrderListRef = useRef(null);
   const thandleClick = (value) => {

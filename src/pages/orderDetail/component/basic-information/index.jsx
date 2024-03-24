@@ -1,10 +1,29 @@
-import { View, Text, Image } from "@tarojs/components";
-import { AtButton, AtList, AtListItem } from "taro-ui";
+import { View, Image, Button } from "@tarojs/components";
+import { AtButton, AtList, AtListItem, AtToast } from "taro-ui";
+import { navigateBack } from "@tarojs/taro";
+import { useFeatch } from "@hooks/fetch";
+import { useState } from "react";
 import dayjs from "dayjs";
 import "./index.scss";
 const BasicInformation = ({ orderDetail }) => {
+  const featch = useFeatch();
+  const [toast, setToast] = useState(false);
+  const grabOrder = async (id) => {
+    await featch("post", "/orders/chageOrderState", {
+      state: "IN_PROGRESS",
+      order_id: orderDetail.id,
+    });
+    setToast(true);
+    setTimeout(() => {
+      navigateBack(-1);
+      setToast(false);
+    }, 1000);
+  };
+
   return (
     <View className="basic-information">
+      <AtToast isOpened={toast} text="抢单成功" icon="check"></AtToast>
+
       <View className="basic-information-top">
         <View className="basic-information-title">基本信息</View>
         <AtList hasBorder={false}>
@@ -29,7 +48,7 @@ const BasicInformation = ({ orderDetail }) => {
           />
         </AtList>
       </View>
-      <AtButton type="primary" circle={true}>
+      <AtButton type="primary" onClick={grabOrder} circle={true}>
         接单
       </AtButton>
     </View>

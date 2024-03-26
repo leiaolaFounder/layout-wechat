@@ -4,12 +4,11 @@ import { useFeatch } from "@hooks/fetch";
 import { AtButton } from "taro-ui";
 import { navigateTo } from "@tarojs/taro";
 import "./index.scss";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const OrderList = (props) => {
   const fetch = useFeatch();
   const [myOrderList, setMyOrderList] = useState([]);
-  const dataArrayRef = useRef([]);
   const [isLoading, setIsLoading] = useState(false);
   const [pageNo, setPageNo] = useState(1);
   const statusMap = {
@@ -32,12 +31,13 @@ const OrderList = (props) => {
       pageNo,
       pageSize: 10,
     });
-    if (data.length) {
-      setTimeout(async () => {
-        await setMyOrderList([...myOrderList, ...data]);
-        setIsLoading(false);
-      }, 1000);
-    }
+    setMyOrderList(() => {
+      if (key == "current") {
+        return [...(data || [])];
+      }
+      return [...myOrderList, ...(data || [])];
+    });
+    setIsLoading(false);
   };
 
   const loadMore = async () => {
@@ -50,12 +50,8 @@ const OrderList = (props) => {
     initData();
   }, [pageNo]);
   useEffect(() => {
-    setMyOrderList([]);
-    if (pageNo == 1) {
-      initData();
-      return;
-    }
     setPageNo(1);
+    initData("current");
   }, [props.current]);
   const jumpOrderDetail = () => {
     const url = "/pages/orderDetail/index";

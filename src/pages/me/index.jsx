@@ -19,7 +19,7 @@ export default function Index() {
       <Header>
         <View className="header-content">
           <Text></Text>
-          <Text>我的</Text>
+          <Text>ME</Text>
           <Text></Text>
         </View>
       </Header>

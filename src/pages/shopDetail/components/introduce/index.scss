@@ -1,0 +1,16 @@
+.introduce {
+  padding: 16px;
+  color: #ffffff;
+  font-size: 28px;
+
+  .introduce-cell {
+    display: flex;
+    padding: 12px 0;
+    View:first-child {
+      width: 140px;
+    }
+    View:nth-child(2) {
+      flex: 1;
+    }
+  }
+}

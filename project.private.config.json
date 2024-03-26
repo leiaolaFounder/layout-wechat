@@ -10,6 +10,20 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/shopDetail/index",
+          "pathName": "pages/shopDetail/index",
+          "query": "shopId=%5Bobject%20Object%5D",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/selectShop/index",
+          "pathName": "pages/selectShop/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/addOrder/index",
           "pathName": "pages/addOrder/index",
           "query": "",

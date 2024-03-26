@@ -1,8 +1,8 @@
 import LaScrollView from "@components/ScrollView/index";
 import { View } from "@tarojs/components";
-import { navigateTo } from "@tarojs/taro";
+import { navigateTo, useDidShow } from "@tarojs/taro";
 import { useFeatch } from "@hooks/fetch";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import "./index.scss";
 
@@ -12,19 +12,18 @@ const OrderList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [pageNo, setPageNo] = useState(1);
-
+  const dataRef = useRef();
+  useDidShow(() => {
+    initData();
+  });
   useEffect(() => {
+    if (pageNo == 1) return;
     initData();
   }, [pageNo]);
-  useEffect(() => {
-    if (!orderDataList.length) {
-      initData();
-      return;
-    }
-  }, [orderDataList]);
   const refresh = async () => {
     setIsRefreshing(true);
-    setOrderDataList([]);
+    setOrderDataList(() => []);
+    initData("refresh");
     setPageNo(1);
   };
 
@@ -33,18 +32,22 @@ const OrderList = () => {
     await setPageNo(pageNo + 1);
     setIsLoading(true);
   };
-  const initData = async () => {
+  const initData = async (key) => {
     const {
       data: { orderList },
     } = await featch("get", "/orders/orderList", {
       pageNo: pageNo,
       pageSize: 10,
     });
-
     if (orderList.length) {
-      await setOrderDataList([...orderDataList, ...orderList]);
+      await setOrderDataList(() => {
+        if (key == "refresh") {
+          return [...orderList];
+        }
+        return [...orderList, ...orderDataList];
+      });
+      pageNo == 1 ? setIsRefreshing(false) : setIsLoading(false);
     }
-    pageNo == 1 ? setIsRefreshing(false) : setIsLoading(false);
   };
 
   const jumpOrderDetail = (id) => {

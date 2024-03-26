@@ -55,7 +55,7 @@ const addOrder = () => {
   return (
     <View className="add-order">
       <AtToast isOpened={toast} text="发布成功" icon="check"></AtToast>
-      <View>
+      <View className="modal">
         <AtModal isOpened={orderDialogFlag}>
           <AtModalHeader>订单码</AtModalHeader>
           <AtModalContent>

@@ -1,0 +1,48 @@
+.order-detail {
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  background: linear-gradient(50deg, #e8acc1 10%, #7f6ecb);
+  .header-content {
+    width: 100%;
+    height: 100%;
+    font-size: 36px;
+    color: black;
+    color: #333333;
+    box-sizing: border-box;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #ffffff;
+  }
+  .tab {
+    .at-tabs {
+      height: 88px !important;
+    }
+  }
+
+  .content {
+    width: 100%;
+    flex: 1;
+    .at-tabs__body {
+      height: 100%;
+    }
+    .at-tabs-pane--active {
+      height: 100% !important;
+    }
+  }
+  .at-tabs__header {
+    background-color: transparent;
+  }
+  .at-tabs__item--active {
+    color: #ffffff;
+  }
+  .at-tabs__underline {
+    height: 0 !important;
+  }
+}

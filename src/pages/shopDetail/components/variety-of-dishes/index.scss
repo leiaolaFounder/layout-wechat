@@ -1,0 +1,39 @@
+.variety-of-dishes {
+  padding: 16px;
+  // height: 100%;
+
+  // .at-tabs__item--active {
+  //   width: 100px;
+  // }
+  .vertical-content {
+    flex: 1;
+    // height: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    .vertical-item-la {
+      padding: 18px;
+      background-color: #ffffff;
+      height: 120px;
+      border-radius: 16px;
+      display: flex;
+      overflow: hidden;
+      image {
+        width: 120px;
+        height: 120px;
+        margin-right: 16px;
+      }
+      .vertical-item-right {
+        width: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-size: 28px;
+        .vertical-right-bottom {
+          color: #ff8200;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}

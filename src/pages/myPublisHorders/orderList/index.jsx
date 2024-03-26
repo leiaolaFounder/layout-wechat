@@ -18,7 +18,7 @@ const OrderList = (props) => {
     COMPLETED: "已审核",
     canceled: "已取消",
   };
-  const initData = async () => {
+  const initData = async (key) => {
     const currentMap = {
       0: "",
       1: "IN_PROGRESS",
@@ -31,10 +31,13 @@ const OrderList = (props) => {
       pageNo,
       pageSize: 10,
     });
-    if (data?.length) {
-      setMyOrderList([...myOrderList, ...data]);
-      setIsLoading(false);
-    }
+    setMyOrderList(() => {
+      if (key == "current") {
+        return [...(data || [])];
+      }
+      return [...myOrderList, ...(data || [])];
+    });
+    setIsLoading(false);
   };
 
   const loadMore = async () => {
@@ -44,19 +47,12 @@ const OrderList = (props) => {
   };
 
   useEffect(() => {
+    setPageNo(1);
+    initData("current");
+  }, [props.current]);
+  useEffect(() => {
     initData();
   }, [pageNo]);
-  useEffect(() => {
-    setMyOrderList([]);
-    setPageNo(1);
-  }, [props.current]);
-
-  useEffect(() => {
-    if (!myOrderList.length) {
-      initData();
-    }
-  }, [myOrderList]);
-
   const jumpOrderDetail = () => {
     const url = "/pages/orderDetail/index";
     navigateTo({

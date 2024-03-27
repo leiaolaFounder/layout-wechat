@@ -2,7 +2,6 @@ import { View, Text, Image } from "@tarojs/components";
 import Header from "../../components/Header/index";
 import Introduce from "./components/introduce/index";
 import VarietyOfDishes from "./components/variety-of-dishes/index";
-import { AtInputNumber } from "taro-ui";
 import { useLoad, navigateBack } from "@tarojs/taro";
 import { useState } from "react";
 import { useFeatch } from "@hooks/fetch";
